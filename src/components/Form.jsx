@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-
-const API_URL = 'https://it-studio-backend-kgev.onrender.com/'
-const headers = { "Content-Type": 'application/json;charset=utf-8', "Access-Control-Allow-Origin": '*' }
+import { createData, updateData } from '../services/apiService';
 
 const FormComponent = ({ data, onClose, id, getData }) => {
   const [formData, setFormData] = useState({
@@ -24,9 +21,9 @@ const FormComponent = ({ data, onClose, id, getData }) => {
       let res;
 
       if (id) {
-        res = await axios.post(API_URL + 'data/update', { id, updateData: formData }, { headers }).catch(err => {})
+        res = await updateData(id, formData)
       } else {
-        res = await axios.post(API_URL + 'data/create', { ...formData }, { headers }).catch(err => {})
+        res = await createData(formData)
       }
 
       const { data } = res

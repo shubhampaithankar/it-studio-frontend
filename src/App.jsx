@@ -1,11 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
 import TableComponent from "./components/Table";
 import Modal from "./components/Modal";
 import FormComponent from "./components/Form";
-
-const API_URL = 'https://it-studio-backend-kgev.onrender.com/'
-const headers = { "Content-Type": 'application/json;charset=utf-8', "Access-Control-Allow-Origin": '*' }
+import { sendEmail } from "./services/apiService";
 
 function App() {
 
@@ -35,7 +32,7 @@ function App() {
 
   const sendDataToEmail = async () => {
     if (selectedData.length <= 0) return
-    const { data } = await axios.post(API_URL + 'email/send', { data: selectedData }, { headers }).catch(err => {})
+    const { data } = await sendEmail(selectedData)
 
     if (data.error) return
 
