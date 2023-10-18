@@ -4,6 +4,8 @@ import TableComponent from "./components/Table";
 import Modal from "./components/Modal";
 import FormComponent from "./components/Form";
 
+const API_URL = 'https://it-studio-backend-kgev.onrender.com/'
+
 function App() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,7 +34,7 @@ function App() {
 
   const sendDataToEmail = async () => {
     if (selectedData.length <= 0) return
-    const { data } = await axios.post(process.env.REACT_APP_API_URL + 'email/send', { data: selectedData }).catch(err => {})
+    const { data } = await axios.post(API_URL + 'email/send', { data: selectedData }).catch(err => {})
 
     if (data.error) return
 
