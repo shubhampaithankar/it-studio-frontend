@@ -5,6 +5,7 @@ import Modal from "./components/Modal";
 import FormComponent from "./components/Form";
 
 const API_URL = 'https://it-studio-backend-kgev.onrender.com/'
+const headers = { "Content-Type": 'application/json;charset=utf-8', "Access-Control-Allow-Origin": '*' }
 
 function App() {
 
@@ -34,7 +35,7 @@ function App() {
 
   const sendDataToEmail = async () => {
     if (selectedData.length <= 0) return
-    const { data } = await axios.post(API_URL + 'email/send', { data: selectedData }).catch(err => {})
+    const { data } = await axios.post(API_URL + 'email/send', { data: selectedData }, { headers }).catch(err => {})
 
     if (data.error) return
 

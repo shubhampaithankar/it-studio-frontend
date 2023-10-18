@@ -3,7 +3,7 @@ import axios from 'axios';
 import FormComponent from './Form';
 
 const API_URL = 'https://it-studio-backend-kgev.onrender.com/'
-
+const headers = { "Content-Type": 'application/json;charset=utf-8', "Access-Control-Allow-Origin": '*' }
 
 const TableComponent = (props) => {
 
@@ -16,7 +16,7 @@ const TableComponent = (props) => {
   const getData = useCallback(async () => {
     try {
       setLoading(true)
-      const { data } = await axios.get(API_URL + 'data/get-all').catch(err => {})
+      const { data } = await axios.get(API_URL + 'data/get-all', { headers }).catch(err => {})
   
       if (data.error) return
 
@@ -39,7 +39,7 @@ const TableComponent = (props) => {
     const deleteData = async () => {
       try {
         setLoading(true)
-        const { data } = await axios.post(API_URL + 'data/delete', { id: entry._id }).catch(err => {})
+        const { data } = await axios.post(API_URL + 'data/delete', { id: entry._id }, { headers }).catch(err => {})
         if (data.error) return
         getData()
         onClose()
