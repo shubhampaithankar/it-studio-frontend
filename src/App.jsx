@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import TableComponent from "./components/Table";
 import Modal from "./components/Modal";
 import FormComponent from "./components/Form";
-import { sendEmail } from "./services/apiService";
+import { sendEmail, getAllData } from "./services/apiService";
 
 function App() {
 
@@ -12,7 +12,10 @@ function App() {
     body: <></>
   })
 
+  const [tableData, setTableData] = useState([])
   const [selectedData, setSelectedData] = useState([])
+
+  const [loading, setLoading] = useState(false)
 
   const onClose = () => {
     setIsModalOpen(false)
@@ -22,10 +25,23 @@ function App() {
     })
   }
 
+  const getData = useCallback(async () => {
+    try {
+      setLoading(true)
+      const { data } = await getAllData()
+  
+      if (data.error) return
+
+      setTableData(data.data);
+      setLoading(false)
+    } catch (error) {
+    } finally { setLoading(false) }
+  }, []);
+
   const addMoreEntries = async () => {
     setModalData({
       title: 'Add entry',
-      body: <FormComponent onClose={onClose} />
+      body: <FormComponent onClose={onClose} getData={getData} />
     })
     setIsModalOpen(true)
   }
@@ -48,7 +64,7 @@ function App() {
     setIsModalOpen(true)
   }
 
-  const props = { setIsModalOpen, onClose, setModalData, selectedData, setSelectedData }
+  const props = { setIsModalOpen, onClose, setModalData, selectedData, setSelectedData, getData, loading, setLoading, tableData }
 
   return (
     <>

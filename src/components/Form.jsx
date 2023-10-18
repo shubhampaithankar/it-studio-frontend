@@ -30,9 +30,9 @@ const FormComponent = ({ data, onClose, id, getData }) => {
       if (data.error) return
 
       getData()
+      onClose()
 
     } catch (error) {}
-    finally { onClose() }
   };
 
   return (

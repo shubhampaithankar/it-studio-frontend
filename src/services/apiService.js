@@ -11,6 +11,6 @@ export const createData = async (data) => (await axios.post(API_URL + 'data/crea
 
 export const updateData = async (id, data) => (await axios.post(API_URL + 'data/update', { id, data }))
 
-export const deleteData = async (id) => (await axios.post(API_URL + 'data/create', { id }))
+export const deleteData = async (id) => (await axios.post(API_URL + 'data/delete', { id }))
 
 export const sendEmail = async (data) => (await axios.post(API_URL + 'email/send', data))

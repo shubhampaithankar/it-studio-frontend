@@ -1,28 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import FormComponent from './Form';
-import { getAllData } from '../services/apiService';
+import { deleteData } from '../services/apiService';
 
 const TableComponent = (props) => {
 
-  const { setIsModalOpen, setModalData, onClose, selectedData, setSelectedData } = props
-
-  const [loading, setLoading] = useState(false)
-  const [tableData, setTableData] = useState([])
+  const { setIsModalOpen, setModalData, onClose, selectedData, setSelectedData, loading, getData, tableData, setLoading } = props
   const tableBodyRef = useRef(null)
 
-  const getData = useCallback(async () => {
-    try {
-      setLoading(true)
-      const { data } = await getAllData()
-  
-      if (data.error) return
-
-      setTableData(data.data);
-      setLoading(false)
-    } catch (error) {
-    } finally { setLoading(false) }
-  }, []);
-  
   const openUpdateModal = async (entry) => {
     setModalData({
       title: 'Update Data',
@@ -33,7 +17,7 @@ const TableComponent = (props) => {
 
   const openDeleteModal = async (entry) => {
 
-    const deleteData = async () => {
+    const deleteD = async () => {
       try {
         setLoading(true)
         const { data } = await deleteData(entry._id)
@@ -52,7 +36,7 @@ const TableComponent = (props) => {
       body: <>
         <h2 className="mx-0 my-2">Are you sure you want to delete this entry?</h2>
         <div className=" mx-auto mt-4 w-100 d-flex align-items-center justify-content-around">
-          <button className="btn-danger btn" onClick={deleteData}>Delete</button>
+          <button className="btn-danger btn" onClick={deleteD}>Delete</button>
           <button className="btn-secondary btn" onClick={onClose}>Cancel</button>
         </div>
       </>
