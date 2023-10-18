@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import FormComponent from './Form';
+import { getAllData } from '../services/apiService';
 
 const TableComponent = (props) => {
 
@@ -12,7 +13,7 @@ const TableComponent = (props) => {
   const getData = useCallback(async () => {
     try {
       setLoading(true)
-      const { data } = await getData()
+      const { data } = await getAllData()
   
       if (data.error) return
 
