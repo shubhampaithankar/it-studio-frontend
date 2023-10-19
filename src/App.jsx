@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import TableComponent from "./components/Table";
 import Modal from "./components/Modal";
 import FormComponent from "./components/Form";
@@ -68,6 +69,7 @@ function App() {
 
   return (
     <>
+    <ErrorBoundary fallback={<h1 className="m-0 text-center bg-white">There was an error, please try again later</h1>}>
       <main className="container-fluid g-0 bg-dark" style={{ height: "100vh" }}>
         <Modal onClose={onClose} show={isModalOpen} modalData={modalData} />
         <h1 className="text-white text-center">The IT Studio Data Table</h1>
@@ -79,6 +81,7 @@ function App() {
           <TableComponent {...props}/>
         </section>
       </main>
+    </ErrorBoundary>
     </>
   );
 }
